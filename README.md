@@ -1,2 +1,2 @@
 # vuid
-VUID - Very Unique Identification
+VUID - Very Unique IDentification

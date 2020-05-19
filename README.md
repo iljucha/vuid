@@ -10,6 +10,3 @@ import VUID from "@iljucha/vuid"
 
 VUID() // -> "wA357Fr3bv2bYfWKLxQmwIM8GogEOCOy"
 ```
-
-## Specifications
-The VUID's length is 32 and has a built in timestamp.

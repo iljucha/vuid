@@ -1,4 +1,4 @@
-# vuid
+# VUID
 VUID - Very Unique IDentification
 
 ## Why did you create this?

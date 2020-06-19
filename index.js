@@ -1,10 +1,22 @@
+import Assert from "@iljucha/assert"
+
 // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Math/math.random
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min), max = Math.floor(max)
     return Math.floor(Math.random() * (max - min +1)) + min
 }
 
-export default function VUID(length = 32) {
+/**
+ * Creates an Unique ID
+ * @param {number} length - Length of VUID, default is 32
+ */
+export default function VUID(length) {
+    if (!length) {
+        length = 32
+    }
+    else {
+        Assert.type(length, "length", "number")
+    }
     let charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
     let variety = charset.length
     let datetime = new Date().toISOString("de-DE").replace(/T|Z/gmi, " ").trim()

@@ -1,44 +1,38 @@
-import Assert from "@iljucha/assert"
-
-// https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Math/math.random
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min), max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min +1)) + min
-}
+const length = 32
+const charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
+const variety = charset.length
 
 /**
  * Creates an Unique ID
- * @param {number} length - Length of VUID, default is 32
  */
-export default function VUID(length) {
-    if (!length) {
-        length = 32
-    }
-    else {
-        Assert.type(length, "length", "number")
-    }
-    let charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
-    let variety = charset.length
-    let datetime = new Date().toISOString("de-DE").replace(/T|Z/gmi, " ").trim()
+export default function VUID() {
+    const datetime = new Date().toISOString("de-DE").replace(/T|Z/gmi, " ").trim()
     let timestamp = "", date = datetime.replace(/\D/g, " ").split(" ")
-    let i = 0, dlength = date.length, random = "", rest = 0
-    function encode(int) {
-        let s = []
-        if (int === 0) {
-            return 0
-        }
-        while (int > 0) {
-            s = [charset[int % variety], ...s]
-            int = Math.floor(int / variety)
-        }
-        return s.join("")
-    }
-    for (i; i < dlength; i++) {
-        timestamp += `${encode(date[i])}`
+    let i = 0, random = "", rest = 0
+    const dLength = date.length
+    for (i; i < dLength; i++) {
+        timestamp += encode(date[i])
     }
     rest = length - timestamp.length
     if (rest > 0) {
-        random = encode(getRandomIntInclusive(0, Math.pow(variety, rest) - 1)).padStart(rest, "0")
+        random = encode(randomInteger(0, Math.pow(variety, rest) - 1)).padStart(rest, "0")
     }
-    return `${timestamp}${random}`
+    return timestamp + random
+}
+
+function encode(int) {
+    let s = []
+    if (int === 0) {
+        return 0
+    }
+    while (int > 0) {
+        s = [charset[int % variety], ...s]
+        int = Math.floor(int / variety)
+    }
+    return s.join("")
+}
+
+function randomInteger(min, max) {
+    min = Math.ceil(min), max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min +1)) + min
 }

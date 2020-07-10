@@ -1,6 +1,6 @@
-const length = 32
-const charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
-const variety = charset.length
+const LENGTH = 32
+const CHARSET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
+const VARIETY = CHARSET.length
 
 /**
  * Creates an Unique ID
@@ -13,9 +13,9 @@ export default function VUID() {
     for (i; i < dLength; i++) {
         timestamp += encode(date[i])
     }
-    rest = length - timestamp.length
+    rest = LENGTH - timestamp.length
     if (rest > 0) {
-        random = encode(randomInteger(0, Math.pow(variety, rest) - 1)).padStart(rest, "0")
+        random = encode(randomInteger(0, Math.pow(VARIETY, rest) - 1)).padStart(rest, "0")
     }
     return timestamp + random
 }
@@ -26,8 +26,8 @@ function encode(int) {
         return 0
     }
     while (int > 0) {
-        s = [charset[int % variety], ...s]
-        int = Math.floor(int / variety)
+        s = [CHARSET[int % VARIETY], ...s]
+        int = Math.floor(int / VARIETY)
     }
     return s.join("")
 }
